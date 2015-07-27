@@ -116,7 +116,8 @@ tar xf "$ARCHIVE" || exit 1
 echo "[+] Unpacking successful."
 
 echo "[*] Applying patches..."
-
+test "$CPU_TARGET" = "arm" && sed -i 's/AFL_QEMU_CPU_SNIPPET2;/AFL_QEMU_CPU_SNIPPET3;/' patches/cpu-exec.diff
+test "$CPU_TARGET" != "arm" && sed -i 's/AFL_QEMU_CPU_SNIPPET3;/AFL_QEMU_CPU_SNIPPET2;/' patches/cpu-exec.diff
 patch -p0 <patches/elfload.diff || exit 1
 patch -p0 <patches/cpu-exec.diff || exit 1
 patch -p0 <patches/translate-all.diff || exit 1

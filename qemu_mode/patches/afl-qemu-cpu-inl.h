@@ -54,6 +54,14 @@
     afl_maybe_log(tb->pc); \
   } while (0)
 
+#define AFL_QEMU_CPU_SNIPPET3 do { \
+    if(tb->pc == afl_entry_point || tb->pc+1 == afl_entry_point) { \
+      afl_setup(); \
+      afl_forkserver(env); \
+    } \
+    afl_maybe_log(tb->pc); \
+  } while (0)
+
 /* We use one additional file descriptor to relay "needs translation"
    messages between the child and the fork server. */
 
